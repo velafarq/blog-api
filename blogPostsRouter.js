@@ -7,9 +7,18 @@ const jsonParser = bodyParser.json();
 
 const {BlogPosts} = require('./models');
 
-BlogPosts.create('Hello World!', 'This is my first blog post', 'Vela F');
-BlogPosts.create('Hi again World!', 'This is my second blog post', 'Vela F');
-BlogPosts.create('Bye World!', 'This is my last blog post', 'Vela F');
+function lorem() {
+    return 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ' +
+      'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, '
+      'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ' +
+      'consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ' +
+      'cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+      'proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  }
+
+BlogPosts.create('Hello World!', lorem(), 'Vela F');
+BlogPosts.create('Hi again World!', lorem(), 'Vela F');
+BlogPosts.create('Bye World!', lorem(), 'Vela F');
 
 router.get('/', (req, res) => {
     res.json(BlogPosts.get());
@@ -25,7 +34,7 @@ router.post('/', jsonParser, (req, res) => {
             return res.status(400).send(message);
         }
     }
-    const item = BlogPosts.create(req.body.title, req.body.content, req.body.author, req.body.publishDate);
+    const item = BlogPosts.create(req.body.title, req.body.content, req.body.author);
     res.status(201).json(item);
 
 });
@@ -57,6 +66,7 @@ router.put('/:id', jsonParser, (req, res) => {
     const updatedPost = BlogPosts.update({
         id: req.params.id,
         title: req.body.title,
+        content: req.body.content,
         author: req.body.author,
         publishDate: req.body.publishDate
     });
