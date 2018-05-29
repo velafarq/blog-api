@@ -5,7 +5,7 @@ const {app, runServer, closeServer} = require('../server');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-descrie('Blog containing entries', function() {
+describe('Blog containing entries', function() {
     before(function() {
         return runServer();
     });
@@ -31,45 +31,43 @@ descrie('Blog containing entries', function() {
         });
     });
 
-    it('should update a blog post on PUT', function() {
-       const updateData = {
-        title: 'foo',
-        content: 'Testing the blog',
-        author: 'Winnie the pooh'
-       };
-
-       return chai.request(app)
-       .get('/blog-posts')
-       .then(function(res) {
-           updateData.id = res.body[0].id;
-           return chai.request(app)
-           .put(`/blog-posts/${updateData.id}`)
-           .send(updateData);
-       })
-
-       .then(function(res) {
-           expect(res).to.have.status(200);
-           expect(res).to.be.json;
-           expect(res.body).to.be.a('object');
-           expect(res.body).to.deep.equal(updateData);
-       });
-    });
-
     it('should add a new entry on POST', function() {
         const newPost = {title: 'Post Test', content: 'This is the body of my test', author: 'M. Bulgakov'};
+
         return chai.request(app)
-        .post('/shopping-list')
+        .post('/blog-posts')
         .send(newPost)
         .then(function(res) {
             expect(res).to.have.status(201);
             expect(res).to.be.json;
             expect(res.body).to.be.a('object');
-            expect(res.body).to.include.keys('id', 'title', 'content', 'author', 'publishDate');
+            expect(res.body).to.include.keys('id', 'title', 'content', 'author');
             expect(res.body.id).to.not.equal(null);
-            expect(res.body).to.deep.equal(Object.assign(newItem, {id: res.body.id}));
+            expect(res.body).to.deep.equal(Object.assign(newPost, {id: res.body.id, publishDate: res.body.publishDate}));
         });
     });
 
+
+    it('should update a blog post on PUT', function() {
+
+       return chai.request(app)
+       .get('/blog-posts')
+       .then(function(res) {
+            const updatePost = Object.assign(res.body[0], {
+                title: 'This is Me',
+                author: 'Winnie the Pooh'
+            });
+
+           return chai.request(app)
+           .put(`/blog-posts/${res.body[0].id}`)
+           .send(updatePost)
+           .then(function(res) {
+            expect(res).to.have.status(204);
+           });
+       });
+    });
+
+   
     it('should remove blog entries on DELETE', function() {
         return chai.request(app)
         .get('/blog-posts')

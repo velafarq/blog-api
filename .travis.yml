@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: TCf//Me2lNEaWDk4aKFMLpxUfpq3V+DTOdwolAR/7gCiDLH9j7gzsyFlN2hBKnc5NC0ZysPUNXkpqh0QDhgkhIhhzwqb9IQeLAfo2aSsePRdrhpepAq9Yq38pM8w6bYQvDxluQU/qhbJ3jQWGvcpTli1nwYlIBm6+U+1eCBme4IQQDk2ARVRHBZtbPa00EvljhoXk9edaPwpJBa1vFusIpR+BE+YomktfWqZUCABJsQV5EVE1vg5VR8/wZQ5Y8BPWJFwqh0veRx8zoytUDsQwsMV307iwv/aLjSZNCV7k4AUmSnc3wXU6pKjw8wbDQ87s326ceKjV1WWyENYGbCxg1i+7li+Jtn/bDSgpok0EoiwVW9IOJPxJUx4T3lOGvR+bBnCkJEC2hJq3kVx4winfLPBsDZVQJ4rT7WaQIT3uKStPGiumklCU3VoxlLjCvWE7fZLWh7hWdvNQV2gwTpss9d9n0F0BbTEV1SsJ0Mfc8gCDqc2BsIZo4GGs5bM9KyOii1xqSH07zi32QAzN4RT2BUcq/T8MSLVzlGFXeuH+zjJul2oRL8BBMU3lGG+yLRFGc6qG1CKcT1ha9zPXFttgW1QA1pU1+Cwv2gILvPU+7ahOfS/QruQO2G+spB/WaUHCVkMhbAbxP3SCUKkQByhDzSJW1VH7HCFyVMy8Ud7Y1E=
+  app: ancient-hollows-99790
+  on:
+    repo: velafarq/blog-api
